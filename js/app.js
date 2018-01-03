@@ -2,82 +2,125 @@ const canvas = document.getElementById('my-canvas');
 
 const ctx = canvas.getContext('2d');
 
+let cw; //cell width
 
-const hero = {
+let food;
+
+let score;
+
+// let snakeArray;
+
+
+const snake = {
     body: {},
     direction: "",
+    snakeArray: [],
 
-    // (eng) set up hero size and location 
+
+    // (eng) set up snake size and location 
     // (js) making this.body be an object with specific properties/values
-    initializeHero: function(){
+    initializesnake: function(){
         this.body = {
+
             x: 58, 
-            y: 37, 
-            r: 12.5, 
+            y: 300, 
+            r: 10, 
             e: 0
+        }
+
+        // this loop creates an array of 16 objects
+        let xValue = 200;
+
+        for(i = 0; i < 16; i++) {
+            //1. create object
+            let snakeObj = {
+
+                x: xValue, 
+                y: 300, 
+                r: 10, 
+                e: 0
+
+            }
+            // 2. push to array
+            this.snakeArray.push(snakeObj);
+
+            //3. make it so that the next ball is 10 to the left
+            xValue = xValue - 10;
+
         }
     },
 
     drawBody: function() {
-        ctx.beginPath();
-        ctx.arc(hero.body.x, hero.body.y, hero.body.r, hero.body.e, Math.PI*2)
-        // ctx.strokeStyle = "green";
-        ctx.fillStyle = "green";
-        ctx.fill();
-        ctx.closePath();
+        for(i = 0; i < this.snakeArray.length; i++){
+            ctx.beginPath();
+            ctx.arc(this.snakeArray[i].x, this.snakeArray[i].y, this.snakeArray[i].r, this.snakeArray[i].e, Math.PI*2)
+            // ctx.strokeStyle = "green";
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.closePath();
+        }
+
     },
-    
+
+
+
     move: function(){
-        if(hero.direction === 'right'){
-            if(hero.body.x + 10 < 400){
-                // move hero right along x axis
-            hero.body = {x: hero.body.x + 10, y: hero.body.y, r: 12.5, e:0}
+        if(snake.direction === 'right'){
+            if(snake.body.x + 10 <= 600){
+                // move snake right along x axis
+            snake.body = {x: snake.body.x + 10, y: snake.body.y, r: 10, e:0}
             }
             
-        }else if(hero.direction === "left"){
+        }else if(snake.direction === "left"){
             // move left from x axis
-            hero.body = {x: hero.body.x - 10, y: hero.body.y, r: 12.5, e:0}
-        }else if(hero.direction === "up"){
-            hero.body = {x: hero.body.x, y: hero.body.y - 10, r: 12.5, e:0}
-        }else if(hero.direction === "down"){
-            hero.body = {x: hero.body.x, y: hero.body.y + 10, r: 12.5, e:0}
+            snake.body = {x: snake.body.x - 10, y: snake.body.y, r: 10, e:0}
+        }else if(snake.direction === "up"){
+            snake.body = {x: snake.body.x, y: snake.body.y - 10, r: 10, e:0}
+        }else if(snake.direction === "down"){
+            snake.body = {x: snake.body.x, y: snake.body.y + 10, r: 10, e:0}
         }
     }
 };
 
 
-document.addEventListener('keydown', moveHeroAround)
 
 
 
-function moveHeroAround(event) {
+// keyboard key code: left 37; up 38; right 39; down 40
+document.addEventListener('keydown', movesnakeAround)
+
+
+
+function movesnakeAround(event) {
 
     let key = event.which;
     
     if(key === 39){
-        // set direction property of hero object to "right"
-        hero.direction = "right";
+        // set direction property of snake object to "right"
+        snake.direction = "right";
 
     }else if (key === 37){
-        hero.direction = "left";
+        snake.direction = "left";
 
     }else if (key === 38){
-        hero.direction = "up";
+        snake.direction = "up";
 
     }else if (key === 40){
-        hero.direction = "down";
+        snake.direction = "down";
 
     }
     // erase the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // this calls the 'move' method of the hero object
-    hero.move();
+    // this calls the 'move' method of the snake object
+    snake.move();
 
-    // this calls the 'drawBody' method of the hero object
-    hero.drawBody();
+    // this calls the 'drawBody' method of the snake object
+    snake.drawBody();
     console.log(key);
 
-}
+};
+
+
 
 
 
@@ -85,18 +128,18 @@ function moveHeroAround(event) {
 
 // let animateCanvas = function(){
 //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     hero.drawBody();
+//     snake.drawBody();
     //requestAnimationFrame?
 //     window.requestAnimatedFrame(animateCanvas)
 // }
 
 
-// hero.move();
+// snake.move();
 
 
 
-hero.initializeHero();
-hero.drawBody();
+snake.initializesnake();
+snake.drawBody();
 
 
 
