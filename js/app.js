@@ -65,20 +65,79 @@ const snake = {
 
 
     move: function(){
+
+
+
         if(snake.direction === 'right'){
-            if(snake.body.x + 10 <= 600){
-                // move snake right along x axis
-            snake.body = {x: snake.body.x + 10, y: snake.body.y, r: 10, e:0}
-            }
-            
+         
+            //1.  unshift new ball (xval = xval + 10)
+            this.snakeArray.unshift({
+                x: this.snakeArray[0].x + 10,
+                y: this.snakeArray[0].y,
+                r: 10,
+                e: 0
+            })
+         
+            //2. pop 
+            this.snakeArray.pop();
+
         }else if(snake.direction === "left"){
-            // move left from x axis
-            snake.body = {x: snake.body.x - 10, y: snake.body.y, r: 10, e:0}
+
+            this.snakeArray.unshift({
+                x: this.snakeArray[0].x - 10,
+                y: this.snakeArray[0].y,
+                r: 10,
+                e: 0
+            })
+         
+            //2. pop 
+            this.snakeArray.pop();
+
         }else if(snake.direction === "up"){
-            snake.body = {x: snake.body.x, y: snake.body.y - 10, r: 10, e:0}
+
+            this.snakeArray.unshift({
+                x: this.snakeArray[0].x,
+                y: this.snakeArray[0].y - 10,
+                r: 10,
+                e: 0
+            })
+         
+            //2. pop 
+            this.snakeArray.pop();
+
         }else if(snake.direction === "down"){
-            snake.body = {x: snake.body.x, y: snake.body.y + 10, r: 10, e:0}
+                        
+            this.snakeArray.unshift({
+                x: this.snakeArray[0].x,
+                y: this.snakeArray[0].y + 10,
+                r: 10,
+                e: 0
+            })
+         
+            //2. pop 
+            this.snakeArray.pop();
+
         }
+
+
+
+
+
+
+        // if(snake.direction === 'right'){
+        //     if(snake.body.x + 10 <= 600){
+        //         // move snake right along x axis
+        //     snake.body = {x: snake.body.x + 10, y: snake.body.y, r: 10, e:0}
+        //     }
+            
+        // }else if(snake.direction === "left"){
+        //     // move left from x axis
+        //     snake.body = {x: snake.body.x - 10, y: snake.body.y, r: 10, e:0}
+        // }else if(snake.direction === "up"){
+        //     snake.body = {x: snake.body.x, y: snake.body.y - 10, r: 10, e:0}
+        // }else if(snake.direction === "down"){
+        //     snake.body = {x: snake.body.x, y: snake.body.y + 10, r: 10, e:0}
+        // }
     }
 };
 
