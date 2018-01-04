@@ -2,14 +2,14 @@ const canvas = document.getElementById('my-canvas');
 
 const ctx = canvas.getContext('2d');
 
-let cw; //cell width
+
 
 let food;
 
 let score;
 
 // let snakeArray;
-
+const INITIALSNAKESIZE = 20;
 
 const snake = {
     body: {},
@@ -31,7 +31,7 @@ const snake = {
         // this loop creates an array of 16 objects
         let xValue = 200;
 
-        for(i = 0; i < 16; i++) {
+        for(i = 0; i < INITIALSNAKESIZE; i++) {
             //1. create object
             let snakeObj = {
 
@@ -52,6 +52,7 @@ const snake = {
 
     drawBody: function() {
         for(i = 0; i < this.snakeArray.length; i++){
+
             ctx.beginPath();
             ctx.arc(this.snakeArray[i].x, this.snakeArray[i].y, this.snakeArray[i].r, this.snakeArray[i].e, Math.PI*2)
             // ctx.strokeStyle = "green";
@@ -121,24 +122,51 @@ const snake = {
 
 
 
+    }, 
+    collisionDetection: function(){
+
+
+        // 1. if you hit the wall you di
+
+        if(this.snakeArray[0].x > 600 || this.snakeArray[0].y > 600 || this.snakeArray[0].x < 0 || this.snakeArray[0].y < 0) {
+            // else if (this.snake[0].x == this.snake[0].y) {
+            // die()
+
+            alert("hit the wall");
+
+        }
+
+
+        // 2. if you eat yourself you die
+
+        for(i = 1; i < this.snakeArray.length; i++) {
+
+            console.log(this.snakeArray[0].x)
+
+            // if the first element touches any other element, dead
+            if(this.snakeArray[0].x === 
+                this.snakeArray[i].x &&
+                this.snakeArray[0].y === 
+                this.snakeArray[i].y 
+                ) {
+
+                alert("you ate yo self")
+            }
+        
+
+
+        }
+        
+
+    } // end collisionDetection()
 
 
 
-        // if(snake.direction === 'right'){
-        //     if(snake.body.x + 10 <= 600){
-        //         // move snake right along x axis
-        //     snake.body = {x: snake.body.x + 10, y: snake.body.y, r: 10, e:0}
-        //     }
-            
-        // }else if(snake.direction === "left"){
-        //     // move left from x axis
-        //     snake.body = {x: snake.body.x - 10, y: snake.body.y, r: 10, e:0}
-        // }else if(snake.direction === "up"){
-        //     snake.body = {x: snake.body.x, y: snake.body.y - 10, r: 10, e:0}
-        // }else if(snake.direction === "down"){
-        //     snake.body = {x: snake.body.x, y: snake.body.y + 10, r: 10, e:0}
-        // }
-    }
+
+
+
+
+
 };
 
 
@@ -147,9 +175,6 @@ const snake = {
 
 // keyboard key code: left 37; up 38; right 39; down 40
 document.addEventListener('keydown', movesnakeAround)
-
-
-
 function movesnakeAround(event) {
 
     let key = event.which;
@@ -168,13 +193,23 @@ function movesnakeAround(event) {
         snake.direction = "down";
 
     }
+
+
+
+
+
     // erase the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // this calls the 'move' method of the snake object
     snake.move();
 
+
     // this calls the 'drawBody' method of the snake object
     snake.drawBody();
+
+    snake.collisionDetection();
+
+
     console.log(key);
 
 };
