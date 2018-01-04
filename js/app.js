@@ -2,14 +2,12 @@ const canvas = document.getElementById('my-canvas');
 
 const ctx = canvas.getContext('2d');
 
+const w = $("#my-canvas").width();
+const h = $("#my-canvas").height();
+const cw = 10;
 
 
-let food;
-
-let score;
-
-// let snakeArray;
-const INITIALSNAKESIZE = 20;
+const snakesize = 20;
 
 const snake = {
     body: {},
@@ -20,18 +18,21 @@ const snake = {
     // (eng) set up snake size and location 
     // (js) making this.body be an object with specific properties/values
     initializesnake: function(){
-        this.body = {
+        // this was the dot
+        // this.body = {
 
-            x: 58, 
-            y: 300, 
-            r: 10, 
-            e: 0
-        }
+        //     x: 58, 
+        //     y: 300, 
+        //     r: 10, 
+        //     e: 0
+        // }
 
+
+        // CREATE SNAKE 
         // this loop creates an array of 16 objects
         let xValue = 200;
 
-        for(i = 0; i < INITIALSNAKESIZE; i++) {
+        for(i = 0; i < snakesize; i++) {
             //1. create object
             let snakeObj = {
 
@@ -41,7 +42,7 @@ const snake = {
                 e: 0
 
             }
-            // 2. push to array
+            // 2. push snake obj ontp snake array
             this.snakeArray.push(snakeObj);
 
             //3. make it so that the next ball is 10 to the left
@@ -161,16 +162,42 @@ const snake = {
     } // end collisionDetection()
 
 
-
-
-
-
-
-
 };
 
+// const createFood = function(){
+//     food {
+//         // generate random numbers
+//         x: Math.floor((Math.random() * 30) + 1),
+//         y: Math.floor((Math.random() * 30) + 1)
+//     }
+// }
 
+const game = {
+    foodArray: [],
+    score: 0,
+    gameOver: false,
+    foodLocation: [],
 
+    createFood: function() {
+        //1. CREATE food
+        let food = {
+            // generate random numbers
+            x: Math.floor(Math.random() * w),
+            y: Math.floor(Math.random() * h)
+        }
+        // add food to foodArray
+        this.foodArray.push(food);
+
+        // 3. draw the food
+    },
+
+    drawFood: function(){
+        // get the food
+        ctx.fillStyle = "black";
+        ctx.fillRect(20,20,150,100);
+        // use the food to draw rectangle on canvas
+    }
+}
 
 
 // keyboard key code: left 37; up 38; right 39; down 40
@@ -210,7 +237,7 @@ function movesnakeAround(event) {
     snake.collisionDetection();
 
 
-    console.log(key);
+    // console.log(key);
 
 };
 
