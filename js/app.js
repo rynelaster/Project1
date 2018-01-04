@@ -10,6 +10,7 @@ const cw = 10;
 const snakesize = 20;
 
 const snake = {
+
     body: {},
     direction: "",
     snakeArray: [],
@@ -27,6 +28,7 @@ const snake = {
         //     e: 0
         // }
 
+// A method is a function that is a property of an object
 
         // CREATE SNAKE 
         // this loop creates an array of 16 objects
@@ -52,6 +54,7 @@ const snake = {
     },
 
     drawBody: function() {
+        console.log("snake.drawbody called")
         for(i = 0; i < this.snakeArray.length; i++){
 
             ctx.beginPath();
@@ -67,7 +70,7 @@ const snake = {
 
 
     move: function(){
-
+        console.log("move called")
 
 
         if(snake.direction === 'right'){
@@ -125,15 +128,18 @@ const snake = {
 
     }, 
     collisionDetection: function(){
-
+        console.log("collisionDetection called");
 
         // 1. if you hit the wall you di
 
-        if(this.snakeArray[0].x > 600 || this.snakeArray[0].y > 600 || this.snakeArray[0].x < 0 || this.snakeArray[0].y < 0) {
+        if(this.snakeArray[0].x > 600 || 
+            this.snakeArray[0].y > 600 || 
+            this.snakeArray[0].x < 0 || 
+            this.snakeArray[0].y < 0) {
             // else if (this.snake[0].x == this.snake[0].y) {
             // die()
 
-            alert("hit the wall");
+            console.log("hit the wall");
 
         }
 
@@ -145,24 +151,44 @@ const snake = {
             console.log(this.snakeArray[0].x)
 
             // if the first element touches any other element, dead
-            if(this.snakeArray[0].x === 
-                this.snakeArray[i].x &&
-                this.snakeArray[0].y === 
-                this.snakeArray[i].y 
-                ) {
+            if(this.snakeArray[0].x === this.snakeArray[i].x &&
+                this.snakeArray[0].y === this.snakeArray[i].y) {
 
-                alert("you ate yo self")
+                console.log("you ate yo self")
             }
+    
+        }
+
+
+        // 3. Is the head of the snake eating the food
+        let s = this.snakeArray[0];
+        let f = game.foodArray[0];
+
+        if(s.x + 10 > f.x &&
+            s.y + 10 > f.y &&
+            s.x - 10 < f.x + 10 &&
+            s.y - 10 < f.y + 10) {
+        // if(head.x < food.x + food.w &&
+        //     foox.x < 
+            // the dot in the middle of the first element in the snake array is to the left of
+            // the dot at the upper left corner of food
+
         
+
+            // console.log(this);
+            console.log('you at food!');
 
 
         }
-        
 
-    } // end collisionDetection()
+   } // end collisionDetection()
+    
+};           
 
 
-};
+
+
+
 
 // const createFood = function(){
 //     food {
@@ -183,7 +209,9 @@ const game = {
         let food = {
             // generate random numbers
             x: Math.floor(Math.random() * w),
-            y: Math.floor(Math.random() * h)
+            y: Math.floor(Math.random() * h),
+            h: 10, 
+            w: 10,
         }
         // add food to foodArray
         this.foodArray.push(food);
@@ -194,14 +222,15 @@ const game = {
     drawFood: function(){
         // get the food
         ctx.fillStyle = "black";
-        ctx.fillRect(20,20,150,100);
+        ctx.fillRect(this.foodArray[0].x, this.foodArray[0].y, this.foodArray[0].h, this.foodArray[0].w);
+
         // use the food to draw rectangle on canvas
     }
-}
+};
 
 
 // keyboard key code: left 37; up 38; right 39; down 40
-document.addEventListener('keydown', movesnakeAround)
+document.addEventListener('keydown', movesnakeAround);
 function movesnakeAround(event) {
 
     let key = event.which;
@@ -221,30 +250,22 @@ function movesnakeAround(event) {
 
     }
 
-
-
-
-
     // erase the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // this calls the 'move' method of the snake object
     snake.move();
 
 
+
     // this calls the 'drawBody' method of the snake object
     snake.drawBody();
-
+    game.drawFood();
     snake.collisionDetection();
 
 
     // console.log(key);
 
 };
-
-
-
-
-
 
 
 // let animateCanvas = function(){
@@ -257,11 +278,12 @@ function movesnakeAround(event) {
 
 // snake.move();
 
-
+// THIS CODE IS RUN WHEN THE PAGE LOADS
 
 snake.initializesnake();
 snake.drawBody();
-
+game.createFood();    
+game.drawFood();
 
 
 
