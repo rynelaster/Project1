@@ -83,9 +83,6 @@ const snake = {
                 e: 0
             })
          
-            //2. pop 
-            this.snakeArray.pop();
-
         }else if(snake.direction === "left"){
 
             this.snakeArray.unshift({
@@ -94,9 +91,6 @@ const snake = {
                 r: 10,
                 e: 0
             })
-         
-            //2. pop 
-            this.snakeArray.pop();
 
         }else if(snake.direction === "up"){
 
@@ -106,9 +100,6 @@ const snake = {
                 r: 10,
                 e: 0
             })
-         
-            //2. pop 
-            this.snakeArray.pop();
 
         }else if(snake.direction === "down"){
                         
@@ -118,15 +109,21 @@ const snake = {
                 r: 10,
                 e: 0
             })
-         
-            //2. pop 
-            this.snakeArray.pop();
 
         }
 
 
+        // if food was just eaten
+            // do not pop
 
-    }, 
+        // else
+        this.snakeArray.pop();
+
+
+
+    },  // end move() function
+
+
     collisionDetection: function(){
         console.log("collisionDetection called");
 
@@ -174,9 +171,9 @@ const snake = {
             // the dot at the upper left corner of food
 
         
+            game.snakeAte();
 
-            // console.log(this);
-            console.log('you at food!');
+        
 
 
         }
@@ -197,7 +194,7 @@ const snake = {
 //         y: Math.floor((Math.random() * 30) + 1)
 //     }
 // }
-
+const snakeScore = $('#score');
 const game = {
     foodArray: [],
     score: 0,
@@ -225,7 +222,35 @@ const game = {
         ctx.fillRect(this.foodArray[0].x, this.foodArray[0].y, this.foodArray[0].h, this.foodArray[0].w);
 
         // use the food to draw rectangle on canvas
+    },
+
+    snakeAte: function(){
+
+        console.log('you at food!');
+
+        // snakeScore(score++);
+        // score (easiest)
+        //     increase score in game data
+        //     change score in html
+        //  need to make snake longer (hardest)
+        // new food after eaten (harder but manageable)
+        //     Get rid of old food
+        //     create new food
+        // let nX = snakeArray[0].x;
+        // let nY = snakeArray[0].y;
+
+        // if(x = food.x && y = food.y){
+            
+        //     let tail = {x: nX, y: nY};
+            
+        //     score++;
+            
+        //     createFood();
+        // }
+        // else
+
     }
+
 };
 
 
@@ -260,6 +285,7 @@ function movesnakeAround(event) {
     // this calls the 'drawBody' method of the snake object
     snake.drawBody();
     game.drawFood();
+    // game.snakeAte();
     snake.collisionDetection();
 
 
@@ -268,12 +294,6 @@ function movesnakeAround(event) {
 };
 
 
-// let animateCanvas = function(){
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     snake.drawBody();
-    //requestAnimationFrame?
-//     window.requestAnimatedFrame(animateCanvas)
-// }
 
 
 // snake.move();
@@ -285,6 +305,11 @@ snake.drawBody();
 game.createFood();    
 game.drawFood();
 
+// let animateCanvas = function(){
+        // put code to repeat 60x/sec in here
+//     window.requestAnimatedFrame(animateCanvas)
+// }
+// animateCanvas()
 
 
 
